@@ -2,6 +2,7 @@ public class SuperArray{
     int current;
     Object[]yoMama;
 
+
     public boolean anyNull(Object[] o){
 	int truth=0;
 	for(int x=0;x<o.length;x++){
@@ -38,8 +39,8 @@ public class SuperArray{
 	return current;
     }
     public void add(Object e){
-	    resize(size()+1);
-	    yoMama[yoMama.length-1]=e;			  
+	resize(size()+1);
+	yoMama[yoMama.length-1]=e;			  
     }
     public void add(int index, Object o){
 	if(!(anyNull(yoMama))){
@@ -49,27 +50,26 @@ public class SuperArray{
 	    yoMama[index]=o;
 	}
 	else{
-        for(int x=index+1;x<current;x++){
-	    if(yoMama[x]==null){
-		for(int u=x; u>index;u--){
-		    yoMama[x]=yoMama[x-1];
+	    for(int x=index+1;x<current;x++){
+		if(yoMama[x]==null){
+		    for(int u=x; u>index;u--){
+			yoMama[x]=yoMama[x-1];
 		    }
+		}
 	    }
-	}
 	}
     }
 
     public Object remove(int index){
-	if(index<0||index>size()){
-	    System.out.println("Error");
-	    return null;
-		}
-	else{
-	    Object ret=yoMama[index];
-	    yoMama[index]=null;
-	    return ret;
+	if(index<0||index>=size()){
+	    throw new IndexOutOfBoundsException();
 	}
+	Object ret=yoMama[index];
+	yoMama[index]=null;
+	return ret;
     }
+	    
+
     public void resize(int newCapacity){
 	Object[]sub = new Object[newCapacity];
 	for(int a=0; a<current;a++){
@@ -77,36 +77,33 @@ public class SuperArray{
 	}
 	yoMama=sub;
 	current = newCapacity;
-}
+    }
     public void clear(){
 	for(int a=0; a<current; a++){
 	    if(yoMama[a]!=null){
 		yoMama[a]=null;
 	    }
 	}
-}
+    }
     public Object get(int index){
 	if(index< 0 || index>=size()){
-	    System.out.println("Error");
-	    return null;
+	    throw new IndexOutOfBoundsException();
 	}
-	else{
 	return yoMama[index];
-	}
+	
     }
     public Object set(int index, Object o){
-	if(index<0 || index>size()){
-	    System.out.println("Error");
-	    return null;
+	if(index<0 || index>=size()){
+	    throw new IndexOutOfBoundsException();
 	}
-	else{
-	    Object replaced=yoMama[index];
-	    yoMama[index]=o;
-	    return replaced;
-	}
+	
+	Object replaced=yoMama[index];
+	yoMama[index]=o;
+	return replaced;
+	
     }
 
-public static void main(String[]aargs){
+    public static void main(String[]aargs){
 	Integer x = new Integer(5);
 	SuperArray a=new SuperArray(3);
 	a.add(1,x);
@@ -115,6 +112,6 @@ public static void main(String[]aargs){
 	a.resize(5);
        	a.set(4,x);
 	a.toString();
-	a.get(1000);
+	a.get(1);
     }    
 }
