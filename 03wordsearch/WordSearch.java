@@ -18,6 +18,19 @@ public class WordSearch{
             }
     }
     }
+    public boolean addWordVertical(String word, int row, int column){
+	if(word.length()> row+1){
+	    return false;
+	}
+	boolean result=false;
+	for(int x=1;x<=word.length();x++){
+	    if (data[row+x-1][column]=='_'){
+		result=true;
+	    }
+	}
+	return result;
+    }
+
     public boolean addWordHorizontal(String word, int row, int column){
     if(word.length()>column+1){
         return false;
@@ -38,3 +51,4 @@ public class WordSearch{
     }
     return result;
     }
+}
