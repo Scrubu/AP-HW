@@ -74,31 +74,104 @@ public class WordSearch{
 		}	
 	}
     
-	//ads horizontally
-	//adds horizontally forward
+	//adds horizontally
 	if(dy==0 &&(dx==-1 || dx==1)){
-	    if(dx==1){
 		if(word.length()>horizontal-column+1){
 		    return false;
 		}
 		else{
 		    for(int x=0;x<word.length();x++){
-			if(data[row][column+x]=='_' || data[row][column+x]==word.charAt(x)){
+			//horizontal forward
+			if(dx==1){
+			    if(data[row][column+x]=='_' || data[row][column+x]==word.charAt(x)){
 			    result=true;
+			    }
+			}
+			//horizontal backwards
+			if(dx==-1){
+			    if(data[row][column+x]=='_' || data[row][column+x]==word.charAt(word.length()-x-1)){
+				result=true;
+			    }
 			}
 		    }
 		}
 		if(result){
 		    for(int x=0;x<word.length();x++){
-			data[row][column+x]=word.charAt(x);
+			if(dx==1){
+			    data[row][column+x]=word.charAt(x);
+			}
+			if(dx==-1){
+			    data[row][column+x]=word.charAt(word.length()-x-1);
+			}
+		    }
+		}
+	}
+	//diagonally downwards
+	if((dx==-1 && dy==1) || (dy==-1 && dx==1)){
+	    if(row>vertical-word.length() || column>horizontal-word.length()){
+		    return false;
+	    }
+	
+	    else{
+		for(int x=0;x<word.length();x++){
+		    if(dy==-1){
+			if(data[row+x][column+x]=='_' || data[row+x][column+x]==word.charAt(x)){
+			    result=true;
+			}
+		    }
+		    if(dy==1){
+			if(data[row+x][column+x]=='_' || data[row+x][column+x]==word.charAt(word.length()-x-1)){
+			    result=true;
+			}
 		    }
 		}
 	    }
-	    //adds backwards horizontally
+	    if(result){
+		for(int x=0;x<word.length();x++){
+		    if(dy==-1){
+			data[row+x][column+x]=word.charAt(x);
+		    }
+		    if(dy==1){
+			data[row+x][column+x]=word.charAt(word.length()-x-1);
+		    }
+		}
+	    }
+	}
+
+	//diagonally upwards
+	if((dx==-1 && dy==-1) || (dx==1 && dy==1)){
+	    if(word.length()>row+1 ||column>horizontal-word.length()){
+		    return false;
+	    }
+	
+	    else{
+		for(int x=0;x<word.length();x++){
+		    if(dy==-1){
+			if(data[row-x][column+x]=='_' || data[row+x][column+x]==word.charAt(x)){
+			    result=true;
+			}
+		    }
+		    if(dy==1){
+			if(data[row-x][column+x]=='_' || data[row+x][column+x]==word.charAt(word.length()-x-1)){
+			    result=true;
+			}
+		    }
+		}
+	    }
+	    if(result){
+		for(int x=0;x<word.length();x++){
+		    if(dy==-1){
+			data[row-x][column+x]=word.charAt(x);
+		    }
+		    if(dy==1){
+			data[row-x][column+x]=word.charAt(word.length()-x-1);
+		    }
+		}
+	    }
 	}
 	return result;
     }
-    
+
 
 	    	 
 
