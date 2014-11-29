@@ -9,12 +9,17 @@ public class WordSearch{
 	this(5,5);
     }
 
-
     //Makes 2D array
     WordSearch(int vertical, int horizontal){
-	vertical=this.vertical;
-	horizontal=this.horizontal;
+	this.vertical=vertical;
+	this.horizontal=horizontal;
 	data=new char[vertical][horizontal];
+	for(int x=0;x<vertical;x++){
+	    for(int y=0;y<horizontal;y++){
+		
+		data[x][y]='_';
+	    }
+	}
     }
 
     //replaces word search with underscore
@@ -37,37 +42,40 @@ public class WordSearch{
 	//adds vertically
 
         if(dx==0 && (dy==1||dy==-1)){
-	    if(dy==-1){
+       
 		if(word.length()>vertical-row+1){
 		    return false;
 		}
 		else{
 		    for(int x=0;x<word.length();x++){
-			if(data[row+x][column]=='_' || data[row+x][column]==word.charAt(x)){
+			if(dy==-1){
+			    if(data[row+x][column]=='_' || data[row+x][column]==word.charAt(x)){
+				result=true;
+			    }
+			}
+			if(dy==1){
+			    if(data[row+x][column]=='_'||data[row+x][column]==word.charAt(word.length()-x-1)){
+				result=true;
+			    }
+			}
+		    }
+		}
+		if(result){
+		    if(dy==-1){
+			for(int x=0; x<word.length();x++){
 			    data[row+x][column]=word.charAt(x);
-			    result=true;
 			}
 		    }
-		}
-	    }
-	
-	    if(dy==1){
-		if(word.length()>row+1){
-		    return false;
-		}
-		else{
-		    for(int x=1;x<=word.length();x++){
-			if(data[row+x-1][column]=='_' || data[row+x-1][column]==word.charAt(word.length()-x)){
+		    if(dy==1){
+			for(int x=1;x<=word.length();x++){
 			    data[row+x-1][column]=word.charAt(word.length()-x);
-			    result=true;
-			}
+				}
 		    }
-		}
-	    }
+		}	
 	}
-
+    
 	//ads horizontally
-	
+	//adds horizontally forward
 	if(dy==0 &&(dx==-1 || dx==1)){
 	    if(dx==1){
 		if(word.length()>horizontal-column+1){
@@ -76,12 +84,17 @@ public class WordSearch{
 		else{
 		    for(int x=0;x<word.length();x++){
 			if(data[row][column+x]=='_' || data[row][column+x]==word.charAt(x)){
-			    data[row][column+x]=word.charAt(x);
 			    result=true;
 			}
 		    }
 		}
+		if(result){
+		    for(int x=0;x<word.length();x++){
+			data[row][column+x]=word.charAt(x);
+		    }
+		}
 	    }
+	    //adds backwards horizontally
 	}
 	return result;
     }
@@ -151,12 +164,20 @@ public class WordSearch{
     public String toString(){
 	String word="";
 	for(int x=0;x<vertical;x++){
+	    word="";
 	    for(int y=0;y<horizontal;y++){
-		word= data[x][y]+" ";
+		word+=data[x][y]+" ";
 	    }
+	    System.out.println(word);
+	    System.out.println();
 	}
-	System.out.println(word);
 	return word;
+    }
+
+    public static void main(String[]aargs){
+	WordSearch a=new WordSearch();
+	a.add("john",0,0,0,-1);
+	a.toString();
     }
 }
     
