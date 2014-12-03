@@ -1,35 +1,103 @@
 import java.util.Random;
+import java.io.File;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Scanner;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+
+
 
 public class WordSearch{
-    Random rand=new Random();
     private char[][]data;
     private int vertical;
     private int horizontal;
+    private long seed;
+    private int answer;
+    public ArrayList<String> words = new ArrayList<String>();
+    Random rand;
+
+    //default
     WordSearch(){
 	this(5,5);
     }
-
-    //Makes 2D array
+    //constructor without seed 
     WordSearch(int vertical, int horizontal){
+	this(vertical, horizontal,0,0);
+    }
+
+    //constructor Makes 2D array
+    WordSearch(int vertical, int horizontal,long seed,int answer){
+	rand=new Random(seed);
 	this.vertical=vertical;
 	this.horizontal=horizontal;
+	this.answer=answer;
+	this.seed=rand.nextInt(); 
 	data=new char[vertical][horizontal];
 	for(int x=0;x<vertical;x++){
 	    for(int y=0;y<horizontal;y++){
-		
 		data[x][y]='_';
 	    }
 	}
     }
 
-    //replaces word search with underscore
-    private void clear(){
-	for(int x=0; x<vertical;x++){
-	    for(int y=0;y<horizontal;y++){
-		data[x][y]='_';
+    //loads file
+    public void loadWordsFromFile(String fileName, boolean fillRandomLetters){
+	//creates word list
+	String word="";
+	int tries=0;
+	try {
+	    FileReader file = new FileReader(fileName);
+	    BufferedReader buffer = new BufferedReader(file);
+ 
+	    while(word!=null) {
+		word=buffer.readLine();
+		if (word!=null )
+		    words.add(word);
             }
+        }
+	catch (IOException e)
+	    {}
+	//chooses random words
+	try{
+	    while(tries<=10){
+		if(add(words.get(rand.nextInt(words.size())),rand.nextInt(vertical),rand.nextInt(horizontal), rand.nextInt(3)-1, rand.nextInt(3)-1)){
+		    tries=0;
+		}
+		else{
+		    tries+=1;
+		}
+	    }
+	}
+	catch(ArrayIndexOutOfBoundsException e){}
+	
+	//fill with letters
+	if(fillRandomLetters){
+	    randomLetters();
 	}
     }
+
+    public void randomLetters(){
+	String alphabet="abcdefghijklmnopqrstuvwxyz";
+	for(int x=0; x<vertical;x++){
+	    for(int y=0;y<horizontal;y++){
+		if(data[x][y]=='_'){
+		    data[x][y]= alphabet.charAt(rand.nextInt(26));
+		}
+	    }
+	}
+    }
+
+//replaces word search with underscore
+private void clear(){
+    for(int x=0; x<vertical;x++){
+	for(int y=0;y<horizontal;y++){
+	    data[x][y]='_';
+	}
+    }
+}
 
    //adds words
 
@@ -232,6 +300,11 @@ public class WordSearch{
 	return result;
     }
 
+    //sets seed
+    public void setSeed(long seed){
+	this.seed=seed;
+    }
+
 
     //creates wordgrid format
     public String toString(){
@@ -247,11 +320,7 @@ public class WordSearch{
 	return word;
     }
 
-    public static void main(String[]aargs){
-	WordSearch a=new WordSearch();
-	a.add("john",0,0,0,-1);
-	a.toString();
-    }
+
 }
     
 
