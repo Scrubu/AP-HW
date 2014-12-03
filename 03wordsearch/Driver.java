@@ -11,6 +11,7 @@ public class Driver{
 	    show = true;
 	}
 	a.loadWordsFromFile("words.txt",show);
+	System.out.println( "Find these words:\n"+ a.wordsInPuzzle() );
 	a.toString();
 
     }
