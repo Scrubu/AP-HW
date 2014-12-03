@@ -17,6 +17,7 @@ public class WordSearch{
     private long seed;
     private int answer;
     public ArrayList<String> words = new ArrayList<String>();
+    public ArrayList<String> findWords = new ArrayList<String>();
     Random rand;
 
     //default
@@ -34,7 +35,9 @@ public class WordSearch{
 	this.vertical=vertical;
 	this.horizontal=horizontal;
 	this.answer=answer;
-	this.seed=rand.nextInt(); 
+	if(this.seed!=seed){
+	setSeed(rand.nextInt()); 
+	}
 	data=new char[vertical][horizontal];
 	for(int x=0;x<vertical;x++){
 	    for(int y=0;y<horizontal;y++){
@@ -42,6 +45,20 @@ public class WordSearch{
 	    }
 	}
     }
+
+    //sets seed
+    public void setSeed(long seed){
+	this.seed=seed;
+    }
+    //gives list of words in grid
+    public String wordsInPuzzle(){
+	String all ="";
+	for(int x=0; x<findWords.size();x++){
+	    all+=" "+ findWords.get(x);
+	}
+	return all;
+    }
+
 
     //loads file
     public void loadWordsFromFile(String fileName, boolean fillRandomLetters){
@@ -61,14 +78,26 @@ public class WordSearch{
 	catch (IOException e)
 	    {}
 	//chooses random words
+	int num= 0;
+	int vertCor=0;
+	int horCor=0;
+	int xcor=0;
+	int ycor=0;
+	String addWord="";
 	try{
-	    while(tries<=10){
-		if(add(words.get(rand.nextInt(words.size())),rand.nextInt(vertical),rand.nextInt(horizontal), rand.nextInt(3)-1, rand.nextInt(3)-1)){
+	    for( tries=0; tries<100;tries++){
+		num=rand.nextInt(words.size());
+		addWord=words.get(num);
+		vertCor=rand.nextInt(vertical);
+		horCor=rand.nextInt(horizontal);
+		xcor=rand.nextInt(3)-1;
+		ycor=rand.nextInt(3)-1;
+
+		if(add(addWord,vertCor,horCor, xcor, ycor)){
 		    tries=0;
+		      findWords.add(addWord);  
 		}
-		else{
-		    tries+=1;
-		}
+
 	    }
 	}
 	catch(ArrayIndexOutOfBoundsException e){}
@@ -111,8 +140,9 @@ private void clear(){
 
         if(dx==0 && (dy==1||dy==-1)){
        
-		if(word.length()>vertical-row+1){
-		    return false;
+	    if(word.length()>vertical-row){
+		return false;
+
 		}
 		else{
 		    for(int x=0;x<word.length();x++){
@@ -120,10 +150,16 @@ private void clear(){
 			    if(data[row+x][column]=='_' || data[row+x][column]==word.charAt(x)){
 				result=true;
 			    }
+			    else{
+				return false;
+			    }
 			}
 			if(dy==1){
 			    if(data[row+x][column]=='_'||data[row+x][column]==word.charAt(word.length()-x-1)){
 				result=true;
+			    }
+			    else{
+				return false;
 			    }
 			}
 		    }
@@ -152,13 +188,20 @@ private void clear(){
 			//horizontal forward
 			if(dx==1){
 			    if(data[row][column+x]=='_' || data[row][column+x]==word.charAt(x)){
-			    result=true;
+			
+				result=true;
+			    }
+			    else{
+				return false;
 			    }
 			}
 			//horizontal backwards
 			if(dx==-1){
 			    if(data[row][column+x]=='_' || data[row][column+x]==word.charAt(word.length()-x-1)){
 				result=true;
+			    }
+			    else{
+				return false;
 			    }
 			}
 		    }
@@ -186,13 +229,20 @@ private void clear(){
 			if(data[row+x][column+x]=='_' || data[row+x][column+x]==word.charAt(x)){
 			    result=true;
 			}
+			else{
+			    return false;
+			}
 		    }
 		    if(dy==1){
 			if(data[row+x][column+x]=='_' || data[row+x][column+x]==word.charAt(word.length()-x-1)){
 			    result=true;
 			}
+			else{
+			    return false;
+			}
 		    }
 		}
+	
 	    }
 	    if(result){
 		for(int x=0;x<word.length();x++){
@@ -203,6 +253,7 @@ private void clear(){
 			data[row+x][column+x]=word.charAt(word.length()-x-1);
 		    }
 		}
+
 	    }
 	}
 
@@ -218,10 +269,16 @@ private void clear(){
 			if(data[row-x][column+x]=='_' || data[row+x][column+x]==word.charAt(x)){
 			    result=true;
 			}
+			else{
+			    return false;
+			}
 		    }
 		    if(dy==1){
 			if(data[row-x][column+x]=='_' || data[row+x][column+x]==word.charAt(word.length()-x-1)){
 			    result=true;
+			}
+			else{
+			    return false;
 			}
 		    }
 		}
@@ -300,10 +357,7 @@ private void clear(){
 	return result;
     }
 
-    //sets seed
-    public void setSeed(long seed){
-	this.seed=seed;
-    }
+  
 
 
     //creates wordgrid format
