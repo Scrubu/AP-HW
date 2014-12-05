@@ -23,6 +23,15 @@ public class SuperArray1{
 	yoMama=new Object[num];
 	current=num;
     }
+    public int find(String word){
+	Object a=word;
+	for(int x=0; x<yoMama.length; x++){
+	    if( compareTo(a,yoMama[x])==0){
+		return x;
+	    }
+	}
+	
+    }
     public String toString(){
 	String john="[";
 	for(int x=0; x<yoMama.length; x++){
