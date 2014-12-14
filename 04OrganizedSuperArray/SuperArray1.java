@@ -1,7 +1,8 @@
+import java.util.*;
 public class SuperArray1{
     int current;
-    Object[]yoMama;
-    public boolean anyNull(Object[] o){
+    String[]yoMama;
+    public boolean anyNull(String[] o){
 	int truth=0;
 	for(int x=0;x<o.length;x++){
 	    if(o[x]==null){
@@ -20,17 +21,8 @@ public class SuperArray1{
 	this(10);
     }
     public SuperArray1(int num){
-	yoMama=new Object[num];
+	yoMama=new String[num];
 	current=num;
-    }
-    public int find(String word){
-	Object a=word;
-	for(int x=0; x<yoMama.length; x++){
-	    if( compareTo(a,yoMama[x])==0){
-		return x;
-	    }
-	}
-	
     }
     public String toString(){
 	String john="[";
@@ -45,23 +37,25 @@ public class SuperArray1{
     public int size(){
 	return current;
     }
-    public int compareTo(Object a, Object b){
+    public int compareTo(String a, String b){
 	int value=0;
-	if(((Integer) a).intValue() > ((Integer) b).intValue()){
+	if(Integer.parseInt(a) >  Integer.parseInt(b)){
 	    value=1;
 	}
-	if(((Integer) a).intValue() < ((Integer) b).intValue()){
+	if(Integer.parseInt(a) < Integer.parseInt(b)){
 	    value=-1;
 	}
 	return value;
     }
+    
+    
     public void insertionSort(){
 	try{
 	    for(int x=0;x<yoMama.length;x++){
 		if(compareTo(yoMama[x],yoMama[x+1])==1){
 		    for(int y=x-1;y>=0;y--){
 			if(compareTo(yoMama[x+1],yoMama[y])<=0){
-			    Object value= yoMama[x+1];
+			    String value= yoMama[x+1];
 			    for(int z=x+1;z>=0;z--){
 				yoMama[z]=yoMama[z-1];
 			    }
@@ -72,11 +66,11 @@ public class SuperArray1{
 	    }
 	}catch(NullPointerException k){}
     }
-    public void add(Object e){
+    public void add(String e){
 	resize(size()+1);
 	yoMama[yoMama.length-1]=e;
     }
-    public void add(int index, Object o){
+    public void add(int index, String o){
 	if(!(anyNull(yoMama))){
 	    resize(size()+1);
 	}
@@ -102,7 +96,7 @@ public class SuperArray1{
 	return ret;
     }
     public void resize(int newCapacity){
-	Object[]sub = new Object[newCapacity];
+	String[]sub = new String[newCapacity];
 	for(int a=0; a<current;a++){
 	    sub[a]=yoMama[a];
 	}
@@ -122,11 +116,11 @@ public class SuperArray1{
 	}
 	return yoMama[index];
     }
-    public Object set(int index, Object o){
+    public Object set(int index, String o){
 	if(index<0 || index>=size()){
 	    throw new IndexOutOfBoundsException();
 	}
-	Object replaced=yoMama[index];
+	String replaced=yoMama[index];
 	yoMama[index]=o;
 	return replaced;
     }
