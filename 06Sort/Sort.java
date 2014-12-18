@@ -59,9 +59,10 @@ public class Sort{
     public static void main(String[] araara){
 	long start, end;
 	Random rand = new Random();
-	int[] john = new int[10000000];
-	int[] jaques=new int[10000000];
-	int[] paco = new int[10000000];
+	int[] john = new int[10000];
+	int[] jaques=new int[10000];
+	int[] paco = new int[10000];
+	int[] fawlkon=new int[10000];
 	int num;
 	for(int x=0;x<john.length;x++){
 	    num=rand.nextInt(1000);
@@ -75,7 +76,8 @@ public class Sort{
 	bubble(john);
 	//System.out.println(Arrays.toString(john));			 
 	 end = System.currentTimeMillis();
-	System.out.println(end-start);
+	System.out.println("total= " +(end-start));
+	System.out.println();
 	
 	//INSERTION SORT
 	System.out.println("INSERTION");
@@ -83,7 +85,8 @@ public class Sort{
 	insertion(jaques);
 	//System.out.println(Arrays.toString(jaques));			 
 	 end = System.currentTimeMillis();
-	System.out.println(end-start);
+	 System.out.println("total= " +(end-start));
+	 System.out.println();
 
 	//SELECTION SORT
 	System.out.println("SELECTION");
@@ -91,6 +94,17 @@ public class Sort{
 	selection(paco);
 	//System.out.println(Arrays.toString(paco));			 
 	end = System.currentTimeMillis();
-	System.out.println(end-start);
+	System.out.println("total= " +(end-start));
+	System.out.println();
+
+	//ARRAYS.SORT
+	System.out.println("ARRAY.SORT");
+	start = System.currentTimeMillis();
+	Arrays.sort(fawlkon);
+	//System.out.println(Arrays.toString(fawlkon));			 
+	end = System.currentTimeMillis();
+	System.out.println("total= " +(end-start));
+	System.out.println();
+	
     }
 }
