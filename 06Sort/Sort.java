@@ -55,9 +55,8 @@ public class Sort{
 		}
 	    }while(finish);
 	
-	    for(int x=0; x<c.length; x++){
-		int placeholder;
-		placeholder=(c[x]/repeat)%10;	
+	    for(int x=0; x<c.length; x++){		
+		int placeholder=(c[x]/repeat)%10;	
 		ArrayList<Integer> inner=row.get(placeholder);
 		inner.add(c[x]);
 	    }
@@ -65,14 +64,14 @@ public class Sort{
 	    for(int x=0; x<row.size(); x++){
 		ArrayList<Integer> inner;
 		inner=(ArrayList<Integer>) row.get(x);
-		int r =0;
+	
 		
 		if(!(inner.isEmpty())){
 		    for(int y=0; y<inner.size();y++){
 			
-			c[t]=inner.get(r);
+			c[t]=inner.get(y);
 			t++;
-			r++;
+			
 		       
 		    }
 		}	    
