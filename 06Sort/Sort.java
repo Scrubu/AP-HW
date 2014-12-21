@@ -1,7 +1,83 @@
 import java.util.Random;
 import java.util.Arrays;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Sort{
+
+    public static String name(){
+	System.out.println("Lai, Kyle");
+	return "Lai, Kyle";
+    }
+    public static int period(){
+	System.out.println("6");
+	return 6;
+    }
+
+    public static void radix(int[]c){
+	int[]numbers= c;
+	int loops=10;
+	int repeat=10;
+	boolean zero=true;
+	boolean finish=true;
+	ArrayList<ArrayList<Integer>> row=new ArrayList<ArrayList<Integer>>();
+	for(int i = 0; i<10; i++){
+	    ArrayList<Integer>john=new ArrayList<Integer>();
+	    for(int j=0; j<0;j++){
+		john.add(0);
+	    }
+	    row.add(john);
+	}
+	do{
+	    do{
+		zero=true;
+		for(int x=0;x<numbers.length;x++){
+		    if((numbers[x]%loops)<loops){
+			zero=false;
+			System.out.println("FUCL");
+		    }
+		    //CHECK
+		    else{
+			System.out.println(numbers[x]%loops);
+		    }
+		}
+		if(zero){
+		    loops=(loops*10);
+		}
+		else{
+		    
+		    finish=false;
+		}
+	    }while(finish);
+	
+	    for(int x=0; x<numbers.length; x++){
+		int placeholder=numbers[x]%repeat;
+		System.out.println(placeholder);
+		ArrayList<Integer> inner=row.get(placeholder);
+		inner.add(numbers[x]);
+		System.out.println(row);
+	    }
+	    for(int x=0; x<numbers.length; x++){
+		ArrayList<Integer> inner;
+	
+		int y=0;
+		inner=(ArrayList<Integer>) row.get(x);
+
+		if(!(inner.isEmpty())){
+		    numbers[x]=inner.get(y);
+			System.out.println(Arrays.toString(numbers));
+		    }
+		    y++;
+		
+	    }
+	    repeat=repeat*10;
+	    System.out.println(repeat);
+	    System.out.println(loops);
+	}while(repeat<=loops);
+	
+	c=numbers;
+    }
+
     public static void selection(int[] c){
 	int base;
 	for(int y=0; y<c.length-1; y++){
@@ -59,22 +135,25 @@ public class Sort{
     public static void main(String[] araara){
 	long start, end;
 	Random rand = new Random();
-	int[] john = new int[10000];
-	int[] jaques=new int[10000];
-	int[] paco = new int[10000];
-	int[] fawlkon=new int[10000];
+	int[] john = new int[10];
+	int[] jaques=new int[10];
+	int[] paco = new int[10];
+	int[] fawlkon=new int[10];
+	int[] niagra= new int[10];
 	int num;
 	for(int x=0;x<john.length;x++){
 	    num=rand.nextInt(1000);
 	    john[x]=num;
-	    jaques[x]=john[x];
-	    paco[x]=john[x];
+	    jaques[x]=num;
+	    paco[x]=num;
+	    fawlkon[x]=num;
+	    niagra[x]=num;
 	}
 	//BUBBLE SORT
 	System.out.println("BUBBLE");
 	start = System.currentTimeMillis();;
 	bubble(john);
-	//System.out.println(Arrays.toString(john));			 
+	System.out.println(Arrays.toString(john));			 
 	 end = System.currentTimeMillis();
 	System.out.println("total= " +(end-start));
 	System.out.println();
@@ -101,10 +180,19 @@ public class Sort{
 	System.out.println("ARRAY.SORT");
 	start = System.currentTimeMillis();
 	Arrays.sort(fawlkon);
-	//System.out.println(Arrays.toString(fawlkon));			 
+	System.out.println(Arrays.toString(fawlkon));			 
 	end = System.currentTimeMillis();
 	System.out.println("total= " +(end-start));
 	System.out.println();
 	
+	//RADIX
+	System.out.println("RADIX");
+	start = System.currentTimeMillis();
+	System.out.println(Arrays.toString(niagra));
+	radix(niagra);
+	System.out.println(Arrays.toString(niagra));			 
+	end = System.currentTimeMillis();
+	System.out.println("total= " +(end-start));
+	System.out.println();
     }
 }
