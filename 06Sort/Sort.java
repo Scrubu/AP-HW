@@ -13,34 +13,37 @@ public class Sort{
 	System.out.println("6");
 	return 6;
     }
+    /*loops is a multiple of 10 and is how many times the function has to be done to return the sorted array, so repeat has to
+      equal to loops for the function to end. Repeat is used to find the modulos of the numbers in the array.
+      zero is what checks if any numberes in the array are less than loops and is used to find the maximum number of placeholders in the array.
+      finish ends the first "do" and returns the number of loops needed to return the sorted array.
 
+     */
     public static void radix(int[]c){
-	int[]numbers= c;
-	int loops=10;
-	int repeat=10;
+	int loops=1;
+	int repeat=1;
 	boolean zero=true;
 	boolean finish=true;
 
 	do{
-	ArrayList<ArrayList<Integer>> row=new ArrayList<ArrayList<Integer>>();
-	for(int i = 0; i<10; i++){
-	    ArrayList<Integer>john=new ArrayList<Integer>();
-	    for(int j=0; j<0;j++){
-		john.add(0);
+	    ArrayList<ArrayList<Integer>> row=new ArrayList<ArrayList<Integer>>();
+	    for(int i = 0; i<10; i++){
+		ArrayList<Integer>john=new ArrayList<Integer>();
+		for(int j=0; j<0;j++){
+		    john.add(0);
+		}
+		row.add(john);
 	    }
-	    row.add(john);
-	}
 	    do{
 		zero=true;
-		for(int x=0;x<numbers.length;x++){
-		    if(numbers[x]<loops){
+		for(int x=0;x<c.length;x++){
+		    if(c[x]<loops){
 			zero=false;
-			System.out.println("FUCL");
+			
 		    }
 		    //CHECK
 		    else{
 			zero=true;
-			System.out.println(numbers[x]%loops);
 		    }
 		}
 		if(zero){
@@ -52,51 +55,32 @@ public class Sort{
 		}
 	    }while(finish);
 	
-	    for(int x=0; x<numbers.length; x++){
+	    for(int x=0; x<c.length; x++){
 		int placeholder;
-		placeholder=numbers[x]%repeat;
-		while(placeholder>9){
-		    placeholder= placeholder/10;
-		}
-		System.out.println(placeholder);
-		System.out.println(numbers[x]);
-		System.out.println(repeat);
+		placeholder=(c[x]/repeat)%10;	
 		ArrayList<Integer> inner=row.get(placeholder);
-		inner.add(numbers[x]);
-		System.out.println(row);
+		inner.add(c[x]);
 	    }
 	    int t=0;
-	    for(int x=0; x<numbers.length; x++){
+	    for(int x=0; x<row.size(); x++){
 		ArrayList<Integer> inner;
-	
-		
 		inner=(ArrayList<Integer>) row.get(x);
-		System.out.println(inner);
-		System.out.println("^INNER");
 		int r =0;
 		
 		if(!(inner.isEmpty())){
 		    for(int y=0; y<inner.size();y++){
 			
-			numbers[t]=inner.get(r);
+			c[t]=inner.get(r);
 			t++;
 			r++;
-		       	System.out.println(Arrays.toString(numbers));
+		       
 		    }
-		}
-		else{
-		    
-		    System.out.println("FUCK YOU ITS EMPTY");
-		}
-	    
+		}	    
 	    }
 	    repeat=repeat*10;
-	    System.out.println(repeat);
-	    System.out.println(loops);
-	    System.out.println(Arrays.toString(numbers));
 	}while(repeat<=loops);
 	
-	c=numbers;
+
     }
 
     public static void selection(int[] c){
@@ -156,14 +140,14 @@ public class Sort{
     public static void main(String[] araara){
 	long start, end;
 	Random rand = new Random();
-	int[] john = new int[10];
-	int[] jaques=new int[10];
-	int[] paco = new int[10];
-	int[] fawlkon=new int[10];
-	int[] niagra= new int[10];
+	int[] john = new int[30];
+	int[] jaques=new int[30];
+	int[] paco = new int[30];
+	int[] fawlkon=new int[30];
+	int[] niagra= new int[30];
 	int num;
 	for(int x=0;x<john.length;x++){
-	    num=rand.nextInt(1000);
+	    num=rand.nextInt(100);
 	    john[x]=num;
 	    jaques[x]=num;
 	    paco[x]=num;
@@ -174,7 +158,7 @@ public class Sort{
 	System.out.println("BUBBLE");
 	start = System.currentTimeMillis();;
 	bubble(john);
-	System.out.println(Arrays.toString(john));			 
+	//	System.out.println(Arrays.toString(john));			 
 	 end = System.currentTimeMillis();
 	System.out.println("total= " +(end-start));
 	System.out.println();
@@ -201,7 +185,7 @@ public class Sort{
 	System.out.println("ARRAY.SORT");
 	start = System.currentTimeMillis();
 	Arrays.sort(fawlkon);
-	System.out.println(Arrays.toString(fawlkon));			 
+		System.out.println(Arrays.toString(fawlkon));			 
 	end = System.currentTimeMillis();
 	System.out.println("total= " +(end-start));
 	System.out.println();
@@ -209,9 +193,8 @@ public class Sort{
 	//RADIX
 	System.out.println("RADIX");
 	start = System.currentTimeMillis();
-	System.out.println(Arrays.toString(niagra));
 	radix(niagra);
-	System.out.println(Arrays.toString(niagra));			 
+		System.out.println(Arrays.toString(niagra));			 
 	end = System.currentTimeMillis();
 	System.out.println("total= " +(end-start));
 	System.out.println();
