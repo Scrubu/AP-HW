@@ -20,6 +20,8 @@ public class Sort{
 	int repeat=10;
 	boolean zero=true;
 	boolean finish=true;
+
+	do{
 	ArrayList<ArrayList<Integer>> row=new ArrayList<ArrayList<Integer>>();
 	for(int i = 0; i<10; i++){
 	    ArrayList<Integer>john=new ArrayList<Integer>();
@@ -28,16 +30,16 @@ public class Sort{
 	    }
 	    row.add(john);
 	}
-	do{
 	    do{
 		zero=true;
 		for(int x=0;x<numbers.length;x++){
-		    if((numbers[x]%loops)<loops){
+		    if(numbers[x]<loops){
 			zero=false;
 			System.out.println("FUCL");
 		    }
 		    //CHECK
 		    else{
+			zero=true;
 			System.out.println(numbers[x]%loops);
 		    }
 		}
@@ -51,28 +53,47 @@ public class Sort{
 	    }while(finish);
 	
 	    for(int x=0; x<numbers.length; x++){
-		int placeholder=numbers[x]%repeat;
+		int placeholder;
+		placeholder=numbers[x]%repeat;
+		while(placeholder>9){
+		    placeholder= placeholder/10;
+		}
 		System.out.println(placeholder);
+		System.out.println(numbers[x]);
+		System.out.println(repeat);
 		ArrayList<Integer> inner=row.get(placeholder);
 		inner.add(numbers[x]);
 		System.out.println(row);
 	    }
+	    int t=0;
 	    for(int x=0; x<numbers.length; x++){
 		ArrayList<Integer> inner;
 	
-		int y=0;
-		inner=(ArrayList<Integer>) row.get(x);
-
-		if(!(inner.isEmpty())){
-		    numbers[x]=inner.get(y);
-			System.out.println(Arrays.toString(numbers));
-		    }
-		    y++;
 		
+		inner=(ArrayList<Integer>) row.get(x);
+		System.out.println(inner);
+		System.out.println("^INNER");
+		int r =0;
+		
+		if(!(inner.isEmpty())){
+		    for(int y=0; y<inner.size();y++){
+			
+			numbers[t]=inner.get(r);
+			t++;
+			r++;
+		       	System.out.println(Arrays.toString(numbers));
+		    }
+		}
+		else{
+		    
+		    System.out.println("FUCK YOU ITS EMPTY");
+		}
+	    
 	    }
 	    repeat=repeat*10;
 	    System.out.println(repeat);
 	    System.out.println(loops);
+	    System.out.println(Arrays.toString(numbers));
 	}while(repeat<=loops);
 	
 	c=numbers;
